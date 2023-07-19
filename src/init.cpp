@@ -28,10 +28,10 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <openssl/crypto.h>
 
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
+//#include <string>
+//#include <iostream>
+//#include <sstream>
+//#include <stdexcept>
 
 #ifndef WIN32
 #include <signal.h>
@@ -50,7 +50,7 @@ unsigned int nNodeLifespan;
 unsigned int nDerivationMethodIndex;
 unsigned int nMinerSleep;
 
-unsigned short const onion_port = 9089; //Tor Onion Routing Default Port
+//unsigned short const onion_port = 9089; //Tor Onion Routing Default Port
 
 unsigned int nBlockMaxSize;
 unsigned int nBlockPrioritySize;
@@ -313,7 +313,7 @@ std::string HelpMessage()
         "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n" +
         "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n" +
         "  -dnsseed               " + _("Find peers using DNS lookup (default: 1)") + "\n" +
-        "  -onionseed             " + _("Find peers using .onion seeds (default: 0 unless -connect)") + "\n" +
+        //"  -onionseed             " + _("Find peers using .onion seeds (default: 0 unless -connect)") + "\n" +
         "  -staking               " + _("Stake your coins to support network and gain reward (default: 1)") + "\n" +
         "  -minstakeinterval=<n>  " + _("Minimum time in seconds between successful stakes (default: 30)") + "\n" +
         "  -minersleep=<n>        " + _("Milliseconds between stake attempts. Lowering this param will not result in more stakes. (default: 1000)") + "\n" +
@@ -529,7 +529,7 @@ bool AppInit2()
         // when only connecting to trusted nodes, do not seed via DNS, or listen by default
         SoftSetBoolArg("-dnsseed", false);
         SoftSetBoolArg("-listen", false);
-        SoftSetBoolArg("-onionseed", false);
+        //SoftSetBoolArg("-onionseed", false);
     }
 
     if (mapArgs.count("-proxy"))
@@ -762,7 +762,7 @@ bool AppInit2()
 
 
     // see Step 2: parameter interactions for more information about these
-    if(!fNativeTor) // Available if nativetor is disabled
+    //if(!fNativeTor) // Available if nativetor is disabled
     {
         fNoListen = !GetBoolArg("-listen", true);
         fDiscover = GetBoolArg("-discover", true);
@@ -1146,16 +1146,16 @@ bool AppInit2()
     printf("mapWallet.size() = %" PRIszu"\n",       pwalletMain->mapWallet.size());
     printf("mapAddressBook.size() = %" PRIszu"\n",  pwalletMain->mapAddressBook.size());
 
-    if (fDebug)
-        printf("Debugging is Enabled.\n");
-	else
-        printf("Debugging is not enabled.\n");
+    //if (fDebug)
+        //printf("Debugging is Enabled.\n");
+	//else
+        //printf("Debugging is not enabled.\n");
 
-    if (!NewThread(StartNode, NULL))
-        InitError(_("Error: could not start node"));
+    //if (!NewThread(StartNode, NULL))
+        //InitError(_("Error: could not start node"));
 
-    if (fServer)
-        NewThread(ThreadRPCServer, NULL);
+    //if (fServer)
+        //NewThread(ThreadRPCServer, NULL);
 
     // ********************************************************* Step 12: finished
 

@@ -146,10 +146,10 @@ bool ClientModel::isTestNet() const
     return fTestNet;
 }
 
-bool ClientModel::isNativeTor() const
-{
-    return fNativeTor;
-}
+//bool ClientModel::isNativeTor() const
+//{
+    //return fNativeTor;
+//}
 
 bool ClientModel::isCNLock() const
 {

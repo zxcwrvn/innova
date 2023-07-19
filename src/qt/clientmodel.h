@@ -39,8 +39,8 @@ public:
     //! Return true if client connected to testnet
     bool isTestNet() const;
 
-    //! Return true if client connected to Tor
-    bool isNativeTor() const;
+    ////! Return true if client connected to Tor
+    //bool isNativeTor() const;
 
     //! Return true if client has locked CN inputs
     bool isCNLock() const;

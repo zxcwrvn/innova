@@ -47,7 +47,7 @@ CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL, bool colLat
 void MapPort();
 unsigned short GetListenPort();
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()), bool fWhitelisted = false);
-void StartTor(void* parg);
+//void StartTor(void* parg);
 void StartNode(void* parg);
 bool StopNode();
 void SocketSendData(CNode *pnode);
@@ -135,8 +135,8 @@ enum threadId
     THREAD_DUMPADDRESS,
     THREAD_RPCHANDLER,
     THREAD_STAKE_MINER,
-    THREAD_TORNET,
-    THREAD_ONIONSEED,
+    //THREAD_TORNET,
+    //THREAD_ONIONSEED,
 
     THREAD_MAX
 };
@@ -367,7 +367,7 @@ public:
     bool fOneShot;
     bool fClient;
     bool fInbound;
-    bool fVerified;
+    //bool fVerified;
     bool fNetworkNode;
     bool fSuccessfullyConnected;
     bool fDisconnect;
@@ -454,7 +454,7 @@ public:
         fOneShot = false;
         fClient = false; // set by version message
         fInbound = fInboundIn;
-        fVerified = false;
+        //fVerified = false;
         fWhitelisted = false;
         fNetworkNode = false;
         fSuccessfullyConnected = false;

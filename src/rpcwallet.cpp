@@ -17,12 +17,12 @@
 
 #include <sstream>
 #include <fstream>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 
 using namespace json_spirit;
 using namespace std;
 
-namespace fs = boost::filesystem;
+//namespace fs = boost::filesystem;
 
 int64_t nWalletUnlockTime;
 static CCriticalSection cs_nWalletUnlockTime;
@@ -119,20 +119,20 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("datareceived",  bytesReadable(CNode::GetTotalBytesRecv())));
     obj.push_back(Pair("datasent",      bytesReadable(CNode::GetTotalBytesSent())));
     obj.push_back(Pair("proxy",         (proxy.first.IsValid() ? proxy.first.ToStringIPPort() : string())));
-    if(fNativeTor)
-    {
-        string automatic_onion;
-        fs::path const hostname_path = GetDefaultDataDir() / "onion" / "hostname";
+    //if(fNativeTor)
+    //{
+        //string automatic_onion;
+        //fs::path const hostname_path = GetDefaultDataDir() / "onion" / "hostname";
 
-        if (!fs::exists(hostname_path)) {
-            printf("No external address found.");
-        }
+        //if (!fs::exists(hostname_path)) {
+            //printf("No external address found.");
+        //}
 
-        ifstream file(hostname_path.string().c_str());
-        file >> automatic_onion;
-        obj.push_back(Pair("ip",       (automatic_onion)));
-    }
-    if(!fNativeTor)
+        //ifstream file(hostname_path.string().c_str());
+        //file >> automatic_onion;
+        //obj.push_back(Pair("ip",       (automatic_onion)));
+    //}
+    //if(!fNativeTor)
         obj.push_back(Pair("ip",            addrSeenByPeer.ToStringIP()));
 
     diff.push_back(Pair("proof-of-work",  GetDifficulty()));
@@ -147,7 +147,7 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("testnet",       fTestNet));
     obj.push_back(Pair("collateralnode",  fCollateralNode));
     obj.push_back(Pair("cnlock",        fCNLock));
-    obj.push_back(Pair("nativetor",     fNativeTor));
+    //obj.push_back(Pair("nativetor",     fNativeTor));
     obj.push_back(Pair("keypoololdest", (int64_t)pwalletMain->GetOldestKeyPoolTime()));
     obj.push_back(Pair("keypoolsize",   (int)pwalletMain->GetKeyPoolSize()));
     obj.push_back(Pair("paytxfee",      ValueFromAmount(nTransactionFee)));
@@ -158,7 +158,7 @@ Value getinfo(const Array& params, bool fHelp)
 	{
     	obj.push_back(Pair("debug",             fDebug));
         obj.push_back(Pair("debugnet",          fDebugNet));
-        obj.push_back(Pair("debugchain",        fDebugChain));
+ //       obj.push_back(Pair("debugchain",        fDebugChain));
         obj.push_back(Pair("debugringsig",      fDebugRingSig));
 	}
   //Q0lSQ1VJVEJSRUFLRVI=

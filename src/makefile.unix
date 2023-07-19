@@ -6,8 +6,8 @@
 
 USE_LEVELDB:=1
 USE_UPNP:=1
-USE_NATIVETOR:=1
-USE_IPFS:=1
+#USE_NATIVETOR:=1
+#USE_IPFS:=1
 
 LINK:=$(CXX)
 ARCH:=$(system lscpu | head -n 1 | awk '{print $2}')
@@ -42,19 +42,19 @@ LIBS += \
    -l crypto \
    -l event
 
-ifndef USE_NATIVETOR
-  override USE_NATIVETOR = -
-endif
-ifneq (${USE_NATIVETOR}, -)
-  DEFS += $(addprefix -I,$(CURDIR)/tor) -DUSE_NATIVETOR=$(USE_NATIVETOR)
-endif
+#ifndef USE_NATIVETOR
+#  override USE_NATIVETOR = -
+#endif
+#ifneq (${USE_NATIVETOR}, -)
+#  DEFS += $(addprefix -I,$(CURDIR)/tor) -DUSE_NATIVETOR=$(USE_NATIVETOR)
+#endif
 
-ifndef USE_IPFS
-  override USE_IPFS = -
-endif
-ifneq (${USE_IPFS}, -)
-  DEFS += $(addprefix -I,$(CURDIR)/ipfs) -DUSE_IPFS=$(USE_IPFS)
-endif
+#ifndef USE_IPFS
+#  override USE_IPFS = -
+#endif
+#ifneq (${USE_IPFS}, -)
+#  DEFS += $(addprefix -I,$(CURDIR)/ipfs) -DUSE_IPFS=$(USE_IPFS)
+#endif
 
 ifndef USE_UPNP
     override USE_UPNP = -
@@ -121,15 +121,15 @@ xCXXFLAGS=-O2 $(EXT_OPTIONS) -pthread -Wall -Wextra -Wno-ignored-qualifiers -Wno
 # LDFLAGS can be specified on the make command line, so we use xLDFLAGS that only
 # adds some defaults in front. Unfortunately, LDFLAGS=... $(LDFLAGS) does not work.
 xLDFLAGS=$(LDHARDENING) $(LDFLAGS)
-
-ifeq (${USE_IPFS}, 1)
 OBJS= \
-     obj/ipfs.o \
-     obj/ipfscurl.o
-endif
+#ifeq (${USE_IPFS}, 1)
+#OBJS= \
+#     obj/ipfs.o \
+#     obj/ipfscurl.o
+#endif
 
-ifeq (${USE_NATIVETOR}, 1)
-OBJS= \
+#ifeq (${USE_NATIVETOR}, 1)
+#OBJS= \
 	obj/address.o \
 	obj/addressmap.o \
 	obj/aes.o \
@@ -217,7 +217,7 @@ OBJS= \
 	obj/ge_msub.o \
 	obj/ge_sub.o \
 	obj/ge_precomp_0.o \
-	obj/geoip.o \
+#	obj/geoip.o \
 	obj/hibernate.o \
 	obj/hs_cache.o \
 	obj/hs_circuitmap.o \
@@ -231,16 +231,16 @@ OBJS= \
 	obj/keccak-tiny-unrolled.o \
 	obj/link_handshake.o \
 	obj/log.o \
-	obj/tormain.o \
+#	obj/tormain.o \
 	obj/memarea.o \
 	obj/microdesc.o \
 	obj/networkstatus.o \
 	obj/nodelist.o \
 	obj/ntmain.o \
-	obj/onion.o \
-	obj/onion_fast.o \
-	obj/onion_ntor.o \
-	obj/onion_tap.o \
+#	obj/onion.o \
+#	obj/onion_fast.o \
+#	obj/onion_ntor.o \
+#	obj/onion_tap.o \
 	obj/open.o \
 	obj/parsecommon.o \
 	obj/periodic.o \
@@ -272,12 +272,12 @@ OBJS= \
 	obj/sign.o \
 	obj/statefile.o \
 	obj/status.o \
-	obj/torcert.o \
-	obj/torcompat.o \
-	obj/tor_main.o \
-	obj/torgzip.o \
-	obj/tortls.o \
-	obj/torutil.o \
+#	obj/torcert.o \
+#	obj/torcompat.o \
+#	obj/tor_main.o \
+#	obj/torgzip.o \
+#	obj/tortls.o \
+#	obj/torutil.o \
 	obj/transports.o \
 	obj/trunnel.o \
 	obj/util_bug.o \
@@ -311,7 +311,7 @@ OBJS= \
     obj/rpcwallet.o \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
-	obj/rpchyperfile.o \
+#	obj/rpchyperfile.o \
     obj/rpcsmessage.o \
     obj/script.o \
     obj/sync.o \
@@ -339,12 +339,12 @@ OBJS= \
     obj/state.o \
 	obj/idns.o \
 	obj/namecoin.o \
-    obj/ipfs.o \
-    obj/ipfscurl.o  \
+ #   obj/ipfs.o \
+ #   obj/ipfscurl.o  \
 	obj/utiltime.o \
     obj/stun.o
-else
-OBJS= \
+#else
+#OBJS= \
     obj/echo.o \
     obj/jh.o \
     obj/keccak.o \
@@ -373,7 +373,7 @@ OBJS= \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
     obj/rpcsmessage.o \
-	obj/rpchyperfile.o \
+#	obj/rpchyperfile.o \
     obj/script.o \
     obj/sync.o \
     obj/util.o \
@@ -400,11 +400,11 @@ OBJS= \
     obj/state.o \
 	obj/idns.o \
 	obj/namecoin.o \
-    obj/ipfs.o \
-    obj/ipfscurl.o  \
+#    obj/ipfs.o \
+#    obj/ipfscurl.o  \
 	obj/utiltime.o \
     obj/stun.o
-endif
+#endif
 
 
 all: innovad
@@ -463,30 +463,30 @@ obj/%.o: json/%.cpp
 	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	rm -f $(@:%.o=%.d)
 
-ifeq (${USE_NATIVETOR}, 1)
-obj/%.o: tor/%.c
-	$(CC) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
-	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
-	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
-	rm -f $(@:%.o=%.d)
+#ifeq (${USE_NATIVETOR}, 1)
+#obj/%.o: tor/%.c
+#	$(CC) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
+#	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
+#	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+#	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
+#	rm -f $(@:%.o=%.d)
 
-obj/anonymize.o: tor/anonymize.cpp
-	$(CXX) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
-	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
-	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
-	rm -f $(@:%.o=%.d)
-endif
+#obj/anonymize.o: tor/anonymize.cpp
+#	$(CXX) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
+#	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
+#	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+#	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
+#	rm -f $(@:%.o=%.d)
+#endif
 
-ifeq (${USE_IPFS}, 1)
-obj/%.o: %.cc
-	$(CC) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
-	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
-	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
-	rm -f $(@:%.o=%.d)
-endif
+#ifeq (${USE_IPFS}, 1)
+#obj/%.o: %.cc
+#	$(CC) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
+#	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
+#	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+#	-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
+#	rm -f $(@:%.o=%.d)
+#endif
 
 innovad: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
@@ -496,7 +496,8 @@ clean:
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/*.d
-	-rm -f obj/build.h -rm -f obj/tor/*.o -rm -f obj/tor/*.P -rm -f obj/ipfs/*.o -rm -f obj/ipfs/*.P
+#	-rm -f obj/build.h -rm -f obj/tor/*.o -rm -f obj/tor/*.P -rm -f obj/ipfs/*.o -rm -f obj/ipfs/*.P
+	-rm -f obj/build.h
 	-cd leveldb && $(MAKE) clean || true
 
 FORCE:

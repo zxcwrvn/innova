@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = innova
-VERSION = 4.3.9.5
+VERSION = 4.3.9.6
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE CURL_STATICLIB
 CONFIG += no_include_pwd
@@ -277,7 +277,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/walletdb.h \
     src/script.h \
     src/stealth.h \
-    src/idns.h \
+    #src/idns.h \
     src/hooks.h \
     src/namecoin.h \
     src/collateral.h \
@@ -455,7 +455,7 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/scrypt.cpp \
     src/pbkdf2.cpp \
     src/stealth.cpp \
-    src/idns.cpp \
+    #src/idns.cpp \
 	src/namecoin.cpp \
     src/collateral.cpp \
     src/activecollateralnode.cpp \
@@ -594,8 +594,8 @@ macx:QMAKE_CXXFLAGS += -stdlib=libc++
 
 
 # Set libraries and includes at end, to use platform-defined defaults if not overridden
-INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$LIBEVENT_INCLUDE_PATH $$LIBCURL_INCLUDE_PATH
-LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,) $$join(LIBEVENT_LIB_PATH,,-L,) $$join(LIBCURL_LIB_PATH,,-L,)
+INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$LIBCURL_INCLUDE_PATH
+LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,) $$join(LIBCURL_LIB_PATH,,-L,)
 LIBS += -lcurl -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 LIBS += -lz -levent
 
